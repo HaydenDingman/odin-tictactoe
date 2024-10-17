@@ -71,14 +71,16 @@ const Display = (function() {
     let container = document.querySelector(".container");
     
     function render() {
-        let gridIndex = 1;
-        for (const row of Board.getBoard()) {
-            for (const square of row) {
+        const board = Board.getBoard();
+
+        for (let row = 0; row < board.length; row++) {
+            for (let square = 0; square < 3; square++) {
                 const newSquare = document.createElement("div");
-                newSquare.dataset.index = gridIndex;
-                newSquare.textContent = square;
+                newSquare.dataset.index = `[${row}][${square}]`;
+                newSquare.classList.add("square");
+                
+                newSquare.textContent = board[row][square];
                 container.appendChild(newSquare);
-                gridIndex++;
             }
         }
     }
