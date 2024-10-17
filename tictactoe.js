@@ -17,21 +17,30 @@ const Board = (function() {
         [7, 8, 9]
     ];
 
-    function checkBoard() {
-        checkRows();
-        checkCols();
-        checkDiags();
-    };
-
     function getBoard() {
-        return testBoard;
+        return gameboard;
     }
+
+    function updateBoard(clickIndex) {
+        let row = Number(clickIndex.at(0));
+        let column = Number(clickIndex.at(1));
+        if (gameboard[row][column] === null) {
+            gameboard[row][column] = Game.getPlayerTurn();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function checkBoard() {
+        return (checkRows() || checkCols() || checkDiags())
+    };
 
     function checkRows() {
         for (let row = 0; row < gameboard.length; row++) {
             if (!(gameboard[row].includes(null))) {
                 if (gameboard[row][0] === gameboard[row][1] && gameboard[row][0] === gameboard[row][2])
-                    console.log("You win!");
+                    return true;
             }
         }
     }
@@ -41,7 +50,7 @@ const Board = (function() {
             let columnSubArray = gameboard.map((row) => row[column]); // Maps array into each column and then checks for sameness
             if (!columnSubArray.includes(null)) {
                 if (columnSubArray[0] === columnSubArray[1] && columnSubArray[1] === columnSubArray[2]) {
-                    console.log("You win!");
+                    return true;
                 }
             }
         }
@@ -51,18 +60,18 @@ const Board = (function() {
         // Check Top-Left to Bottom-Right
         if (gameboard[0][0] !== null) {
             if (gameboard[0][0] === gameboard[1][1] && gameboard[1][1] === gameboard[2][2]) {
-                console.log("You win!");
+                return true;
             }
         }
         // Check Bottom-Left to Top-Right
         if (gameboard[2][0] != null) {
             if (gameboard[2][0] === gameboard[1][1] && gameboard[1][1] === gameboard[0][2]) {
-                console.log("You win!");
+                return true;
             }
         }
     }
 
-    return {checkBoard, getBoard};
+    return {checkBoard, getBoard, updateBoard};
 })();
 
 const Display = (function() {
@@ -71,14 +80,15 @@ const Display = (function() {
     let container = document.querySelector(".container");
     
     function render() {
+        container.replaceChildren();
         const board = Board.getBoard();
 
         for (let row = 0; row < board.length; row++) {
             for (let square = 0; square < 3; square++) {
                 const newSquare = document.createElement("div");
-                newSquare.dataset.index = `[${row}][${square}]`;
+                newSquare.dataset.index = `${row}${square}`;
                 newSquare.classList.add("square");
-                
+                newSquare.addEventListener("click", () => Game.playerMove(newSquare.dataset.index));
                 newSquare.textContent = board[row][square];
                 container.appendChild(newSquare);
             }
@@ -89,10 +99,42 @@ const Display = (function() {
 })();
 
 const Game = (function() {
+    function createPlayer (name, marker) {
+        this.name = name;
+        this.marker = marker;
+        return {name, marker};
+    };
+    
+    const playerOne = createPlayer("Player One", "X");
+    const playerTwo = createPlayer("Player Two", "O");
 
+    let playerTurn = playerOne;
+
+    function getPlayerTurn() {
+        return playerTurn.marker;
+    }
+
+    function playerMove(index) {
+        if (Board.updateBoard(index)) {
+            Display.render();
+            if (Board.checkBoard()) {
+                console.log(playerTurn.name + " wins!")
+            } else {
+                endTurn();
+            }
+        }
+    }
+
+    function endTurn() {
+        Board.checkBoard();
+        if (playerTurn === playerOne) {
+            playerTurn = playerTwo;
+        } else {
+            playerTurn = playerOne;
+        }
+    }
+
+    return {getPlayerTurn, playerMove}
 })();
 
-const Player = {};
-
-Board.checkBoard();
 Display.render();
