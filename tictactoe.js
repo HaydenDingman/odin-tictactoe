@@ -1,5 +1,5 @@
-const Board = (function() {
-    const gameboard = [
+const Board = (function () {
+    let gameboard = [
         [null, null, null],
         [null, null, null],
         [null, null, null]
@@ -10,7 +10,7 @@ const Board = (function() {
         ["X", "X", "O"],
         ["O", "X", "O"]
     ];
-    
+
     const numBoard = [
         [1, 2, 3],
         [4, 5, 6],
@@ -30,6 +30,14 @@ const Board = (function() {
         } else {
             return false;
         }
+    }
+
+    function resetBoard() {
+        gameboard = [
+            [null, null, null],
+            [null, null, null],
+            [null, null, null]
+        ];
     }
 
     function checkBoard() {
@@ -71,14 +79,14 @@ const Board = (function() {
         }
     }
 
-    return {checkBoard, getBoard, updateBoard};
+    return { checkBoard, getBoard, updateBoard, resetBoard };
 })();
 
-const Display = (function() {
+const Display = (function () {
 
     // Cache DOM
     let container = document.querySelector(".container");
-    
+
     function render() {
         container.replaceChildren();
         const board = Board.getBoard();
@@ -95,32 +103,39 @@ const Display = (function() {
         }
     }
 
-    return {render};
+    return { render };
 })();
 
-const Game = (function() {
-    function createPlayer (name, marker) {
+const Game = (function () {
+
+    function createPlayer(name, marker) {
         this.name = name;
         this.marker = marker;
-        return {name, marker};
+        return { name, marker };
     };
-    
+
     const playerOne = createPlayer("Player One", "X");
     const playerTwo = createPlayer("Player Two", "O");
-
     let playerTurn = playerOne;
+
+    // Cache DOM
+    let newGameButton = document.querySelector(".new-game");
+    newGameButton.addEventListener("click", newGame);
 
     function getPlayerTurn() {
         return playerTurn.marker;
     }
 
     function playerMove(index) {
-        if (Board.updateBoard(index)) {
-            Display.render();
-            if (Board.checkBoard()) {
-                console.log(playerTurn.name + " wins!")
-            } else {
-                endTurn();
+        if (playerTurn) {
+            if (Board.updateBoard(index)) {
+                Display.render();
+                if (Board.checkBoard()) {
+                    console.log(playerTurn.name + " wins!")
+                    playerTurn = null;
+                } else {
+                    endTurn();
+                }
             }
         }
     }
@@ -134,7 +149,14 @@ const Game = (function() {
         }
     }
 
-    return {getPlayerTurn, playerMove}
+    function newGame() {
+        console.log("New game");
+        playerTurn = playerOne;
+        Board.resetBoard();
+        Display.render();
+    }
+
+    return { getPlayerTurn, playerMove, newGame }
 })();
 
-Display.render();
+Game.newGame();
