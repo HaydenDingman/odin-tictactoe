@@ -9,35 +9,36 @@
 }
 
 :root {
-    font-size:16px;
+    font-size: 16px;
     font-family: "Cabin", system-ui;
     --background: #56121e;
     --main-text: #F7D6D0;
     --grid-lines: #FC3C80;
+    --grid-hover: #ad2e5a;
     --button-bg: #b72a5b;
     --results-text: #FFA3B8;
 
     color: var(--main-text);
 }
 
-body {    
-    width:100vw;
-    height:100vh;
+body {
+    width: 100vw;
+    height: 100vh;
     background-color: var(--background);
 }
 
 header {
     padding-bottom: 5vh;
-    padding-top:5vh;
+    padding-top: 5vh;
     text-align: center;
     font-size: 5rem;
-    font-weight:700;
+    font-weight: 700;
 }
 
 button {
     background-color: var(--button-bg);
-    color:var(--main-text);
-    outline:2px solid var(--grid-lines);
+    color: var(--main-text);
+    outline: 2px solid var(--grid-lines);
 }
 
 button:hover {
@@ -51,8 +52,8 @@ button:active {
 
 .new-game {
     font-size: 1.25rem;
-    padding:10px 20px;
-    border-radius:10px;
+    padding: 10px 20px;
+    border-radius: 10px;
 }
 
 .interface {
@@ -60,21 +61,21 @@ button:active {
 
     display: grid;
     grid-template-columns: 1fr auto 1fr;
-    gap:50px;
+    gap: 50px;
     justify-content: space-between;
     align-items: center;
 }
 
 .player-one {
-    display:flex;
-    gap:10px;
+    display: flex;
+    gap: 10px;
     justify-content: center;
     align-items: baseline;
 }
 
 .player-two {
-    display:flex;
-    gap:5px;
+    display: flex;
+    gap: 5px;
     justify-content: center;
     align-items: baseline;
 }
@@ -87,38 +88,38 @@ svg {
 .interface input {
     font-size: 1.25rem;
     padding: 10px;
-    grid-column:1/-1;
-    border-radius:5px;
+    grid-column: 1/-1;
+    border-radius: 5px;
 }
 
 .interface input:disabled {
-    font-size:1.5rem;
+    font-size: 1.5rem;
     background-color: var(--background);
-    color:var(--main-text);
+    color: var(--main-text);
     padding: 10px;
-    text-align:center;
+    text-align: center;
 }
 
 .apply-name-change {
     visibility: hidden;
 
     padding: 10px 20px;
-    border-radius:5px;
+    border-radius: 5px;
 }
 
 .results {
-    padding:20px;
-    height:5rem;
+    padding: 20px;
+    height: 5rem;
 
     font-size: 2rem;
-    font-weight:500;
-    text-align:center;
+    font-weight: 500;
+    text-align: center;
 
-    color:var(--results-text);
+    color: var(--results-text);
 }
 
 .container {
-    display:grid;
+    display: grid;
     justify-content: center;
 }
 
@@ -129,20 +130,24 @@ svg {
     height: 600px;
     justify-content: center;
 
-    display:grid;
+    display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
-    gap:5px;
+    gap: 5px;
 }
 
 .square {
     background-color: var(--background);
 
-    font-size:5rem;
+    font-size: 5rem;
     font-family: "Caveat Brush";
 
-    display:flex;
+    display: flex;
     justify-content: center;
     align-items: center;
 
+}
+
+.square:hover {
+    background-color: var(--grid-hover);
 }
