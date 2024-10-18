@@ -1,21 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=cabin:400,700|caveat-brush:400" rel="stylesheet" />
     <link rel="stylesheet" href="tictactoe.css">
     <title>Tic-Tac-Toe || The Odin Project</title>
 </head>
+
 <body>
     <header>
-            <h1>Tic-Tac-Toe</h1>
-            <button class="new-game">New Game?</button>
+        <h1>Ticcy Taccy Toes</h1>
     </header>
 
     <main>
-        <div class="container"></div>
+        <div class="interface">
+            <div class="player-one">
+                <input type="text" id="player-one-name" aria-label="player-one-name" class="player-one-edit"
+                    placeholder="Player One ('X')" disabled="true" pattern="[A-Za-z]*" />
+                <div class="edit-button player-one-edit">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-edit">
+                        <title>Edit Name</title>
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                </div>
+                <button class="apply-name-change player-one-apply player-one-edit">Apply</button>
+            </div>
+            <button class="new-game">New Game?</button>
+            <div class="player-two">
+                <input type="text" id="player-two-name" aria-label="player-one-name" class="player-two-edit"
+                    placeholder="Player Two ('O')" disabled="true" pattern="[A-Za-z]*" />
+                <div class="edit-button player-two-edit">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-edit">
+                        <title>Edit Name</title>
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                </div>
+                <button class="apply-name-change player-two-apply player-two-edit">Apply</button>
+            </div>
+        </div>
+        <div class="results"></div>
+        <div class="container">
+            <div class="gameboard"></div>
+        </div>
     </main>
 
     <script src="tictactoe.js"></script>
 </body>
+
 </html>
